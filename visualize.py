@@ -6,6 +6,7 @@ import os
 import yaml
 from auxiliary.laserscan import LaserScan, SemLaserScan
 from auxiliary.laserscanvis import LaserScanVis
+from PIL import Image   # for save vis
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser("./visualize.py")
@@ -161,3 +162,10 @@ if __name__ == '__main__':
 
   # run the visualizer
   vis.run()
+
+  img_numpy = vis.canvas.render()   # 使用vis.run()调整好视角后，q键退出自动保存当前视图; 此为3D视图
+  img = Image.fromarray(img_numpy)
+  img.save("scan-3D.png")
+  img_numpy = vis.img_canvas.render()   # 使用vis.run()调整好视角后，q键退出自动保存当前视图; 此为球面投影视图
+  img = Image.fromarray(img_numpy)
+  img.save("scan-range.png")
